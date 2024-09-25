@@ -5,11 +5,14 @@ import me.sark.coollookin.coollookin.MessengerHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 
 public class Home implements CommandExecutor
 {
@@ -27,31 +30,33 @@ public class Home implements CommandExecutor
 
         player = ((Player) commandSender).getPlayer();
 
-        if (!player.isOp())
+        if (player == null)
         {
-            MessengerHelper.sendMessageToPlayer(player,"&7[&cHome&7] &8»&7 Command not implemented yet lol.");
-            return true;
+            Bukkit.getLogger().log(Level.SEVERE, "Player using home command is null");
+            return false;
         }
 
-        worldName = player.getWorld().getName();
+        worldName = World.Environment.NORMAL.name();
 
-        if (!CoolLookin.homeData.getConfig().contains("homes." + worldName + "." + player.getUniqueId().toString()))
+        if (!CoolLookin.homeData.getConfig().contains("homes."+ worldName + "." + player.getUniqueId().toString()))
         {
             MessengerHelper.sendMessageToPlayer
-                    (player,"&7[&cHome&7] &8»&7 You don't have any homes, you can set one by doing &e/sethome&7.");
+                    (player,"&7[&cHomes&7] &8»&7 You don't have any homes, you can set one by doing &e/sethome&7.");
             return true;
         }
 
-
-
+        /* Getting the cords form the figgy */
         double hX,hY,hZ;
-        hX = CoolLookin.homeData.getConfig().getDouble("homes." + worldName + "." + player.getUniqueId().toString() + ".X");
-        hY = CoolLookin.homeData.getConfig().getDouble("homes." + worldName + "." + player.getUniqueId().toString() + ".Y");
-        hZ = CoolLookin.homeData.getConfig().getDouble("homes." + worldName + "." + player.getUniqueId().toString() + ".Z");
+        hX = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".X");
+        hY = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y");
+        hZ = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z");
 
-        MessengerHelper.sendMessageToPlayer(player, "Home cords :: ( X:" + hX + ", Y:" + hY + ", Z:" + hZ + ")");
+        /* Sending message and teleporting player */
+        MessengerHelper.sendMessageToPlayer
+                (player,"&7[&aHomes&7] &8»&7 Teleporting to home!");
         Location newLocation = new Location(Bukkit.getWorld("world"), hX,hY,hZ);
         player.teleport(newLocation);
+
 
         return true;
     }
