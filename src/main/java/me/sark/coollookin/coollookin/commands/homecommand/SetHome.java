@@ -52,6 +52,10 @@ public class SetHome implements CommandExecutor
                     ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
             CoolLookin.homeData.getConfig().set
                     ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
+            CoolLookin.homeData.getConfig().set
+                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH", player.getLocation().getPitch());
+            CoolLookin.homeData.getConfig().set
+                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW", player.getLocation().getYaw());
 
             MessengerHelper.sendMessageToPlayer(player, "&7[&aHomes&7] &8»&7 Added your first home at current location!");
             CoolLookin.homeData.saveConfig();
@@ -73,9 +77,13 @@ public class SetHome implements CommandExecutor
             CoolLookin.homeData.getConfig().set
                     ("homes."+ worldName + "." + player.getUniqueId().toString() + ".X", player.getLocation().getX());
             CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
+                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
             CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
+                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
+            CoolLookin.homeData.getConfig().set
+                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH", player.getLocation().getPitch());
+            CoolLookin.homeData.getConfig().set
+                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW", player.getLocation().getYaw());
 
             MessengerHelper.sendMessageToPlayer(player, "&7[&aHomes&7] &8»&7 Overwrote your old home.");
             CoolLookin.homeData.saveConfig();

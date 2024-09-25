@@ -45,14 +45,18 @@ public class Home implements CommandExecutor
 
         /* Getting the cords form the figgy */
         double hX,hY,hZ;
+        float hPitch, hYaw;
+
         hX = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".X");
         hY = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y");
         hZ = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z");
+        hPitch = (float)CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH");
+        hYaw = (float)CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW");
 
         /* Sending message and teleporting player */
         MessengerHelper.sendMessageToPlayer
                 (player,"&7[&aHomes&7] &8»&7 Teleporting to home!");
-        Location newLocation = new Location(Bukkit.getWorld("world"), hX,hY,hZ);
+        Location newLocation = new Location(Bukkit.getWorld("world"), hX,hY,hZ,hYaw,hPitch);
         player.teleport(newLocation);
 
 
