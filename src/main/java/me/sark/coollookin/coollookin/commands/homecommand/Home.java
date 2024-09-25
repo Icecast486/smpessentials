@@ -3,13 +3,11 @@ package me.sark.coollookin.coollookin.commands.homecommand;
 import me.sark.coollookin.coollookin.CoolLookin;
 import me.sark.coollookin.coollookin.MessengerHelper;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Level;
