@@ -1,11 +1,29 @@
 package me.sark.coollookin.coollookin.commands.teleport;
 
 import me.sark.coollookin.coollookin.MessengerHelper;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
+
+
+
+/*
+    Class: TeleportDeny
+
+    This class is the "tpd" command which is really simple and takes
+    in no arguments. Usage: /tpd
+
+    First it checks whether the sender (target) has a requests if target has no requests,
+    exit the function because there are no requests to deny. Otherwise, remove the request
+    from the hashmap in TeleportManager.
+
+ */
+
+
 
 public class TeleportDeny implements CommandExecutor
 {
@@ -22,6 +40,12 @@ public class TeleportDeny implements CommandExecutor
 
         /* Gets the person that sent the command */
         target = ((Player) commandSender).getPlayer();
+
+        if (target == null)
+        {
+            Bukkit.getLogger().log(Level.SEVERE, "Target was null in when denying teleport");
+            return false;
+        }
 
         /* Checking whether args are valid */
         if (args.length != 0)

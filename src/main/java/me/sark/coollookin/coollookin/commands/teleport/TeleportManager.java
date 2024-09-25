@@ -3,7 +3,6 @@ package me.sark.coollookin.coollookin.commands.teleport;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class TeleportManager
 {

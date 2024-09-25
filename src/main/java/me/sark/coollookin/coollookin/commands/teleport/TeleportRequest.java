@@ -2,18 +2,32 @@ package me.sark.coollookin.coollookin.commands.teleport;
 
 import me.sark.coollookin.coollookin.MessengerHelper;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TeleportRequest implements CommandExecutor {
-
-    /* This map holds all the requests, <Requester, Subject> */
+import java.util.logging.Level;
 
 
+
+/*
+    Class: Teleport Request
+
+    This Class is the "tpr" command. It takes in one argument which is the target
+    the player wants to teleport to. Usage: /tpr <target>
+
+    First it checks whether the target exists or if the target is the player that called
+    the command. Then it adds the target into a requests hash map defined in TeleportManager.
+    Finally, in the end, it sends a message to both the executor and target confirming the request has
+    been sent.
+ */
+
+
+
+public class TeleportRequest implements CommandExecutor
+{
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
     {
@@ -29,6 +43,12 @@ public class TeleportRequest implements CommandExecutor {
 
         /* Setting requester to the player that sent the command */
         requester = ((Player) commandSender).getPlayer();
+
+        if (requester == null)
+        {
+            Bukkit.getLogger().log(Level.SEVERE, "Requester was null when sending teleport request");
+            return false;
+        }
 
         /* Checking whether args are valid */
         if (args.length != 1)
@@ -46,6 +66,12 @@ public class TeleportRequest implements CommandExecutor {
 
         /* Setting target to the argument passed in by the requester */
         target = Bukkit.getPlayer(args[0]);
+
+        if (target == null)
+        {
+            Bukkit.getLogger().log(Level.SEVERE, "Target was null when receiving teleport request");
+            return false;
+        }
 
         /* Checking if the player wants to teleport to themselves */
         if (target.getUniqueId() == requester.getUniqueId())
@@ -65,7 +91,6 @@ public class TeleportRequest implements CommandExecutor {
         if (TeleportManager.isRequesting(requester))
         {
             TeleportManager.removeRequestByRequester(requester);
-
             MessengerHelper.sendMessageToPlayer(requester,"&7[&aTeleport&7] &8»&7 Removed your previous request!");
         }
 

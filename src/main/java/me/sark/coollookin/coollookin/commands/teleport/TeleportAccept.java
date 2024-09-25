@@ -1,14 +1,35 @@
 package me.sark.coollookin.coollookin.commands.teleport;
 
 import me.sark.coollookin.coollookin.MessengerHelper;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TeleportAccept implements CommandExecutor {
+import java.util.logging.Level;
 
+
+
+/*
+    Class: TeleportAccept
+
+    This class is the "tpa" command which takes in no arguments.
+    Usage: /tpa
+
+    First it gets the player that executed the command (which should be a target
+    referred to in TeleportRequest). Then it checks whether the executor (target)
+    has a pending request in the hashmap defined in TeleportManager. If the target has
+    NO key in the hashmap then the target has no requests. Otherwise, the target has a
+    pending teleport request from another player.
+
+    Finally, we get the requester and send a message to them saying that they're being teleported
+    and teleport them to the target.
+ */
+
+
+public class TeleportAccept implements CommandExecutor
+{
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
     {
@@ -23,6 +44,13 @@ public class TeleportAccept implements CommandExecutor {
 
         /* Gets the command sender and stores it into target */
         target = ((Player) commandSender).getPlayer();
+
+        /* Checking for null player */
+        if (target == null)
+        {
+            Bukkit.getLogger().log(Level.SEVERE, "Target was null in when accepting teleport");
+            return false;
+        }
 
         /* Checking whether args are valid */
         if (args.length != 0)
