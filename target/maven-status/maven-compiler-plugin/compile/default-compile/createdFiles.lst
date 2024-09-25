@@ -1,0 +1,12 @@
+me/sark/coollookin/coollookin/events/ChatEvents.class
+me/sark/coollookin/coollookin/commands/teleport/TeleportManager.class
+me/sark/coollookin/coollookin/commands/homecommand/SetHome.class
+me/sark/coollookin/coollookin/commands/teleport/TeleportDeny.class
+me/sark/coollookin/coollookin/MessengerHelper.class
+me/sark/coollookin/coollookin/commands/teleport/TeleportRequest.class
+me/sark/coollookin/coollookin/commands/homecommand/Home.class
+me/sark/coollookin/coollookin/commands/general/CurrentOnlinePlayers.class
+me/sark/coollookin/coollookin/commands/general/Nick.class
+me/sark/coollookin/coollookin/commands/homecommand/HomeDataManager.class
+me/sark/coollookin/coollookin/CoolLookin.class
+me/sark/coollookin/coollookin/commands/teleport/TeleportAccept.class

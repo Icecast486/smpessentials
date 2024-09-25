@@ -1,0 +1,24 @@
+name: CoolLookin
+version: '1.0'
+main: me.sark.coollookin.coollookin.CoolLookin
+api-version: '1.20'
+author: iSark
+commands:
+  tpr:
+    description: Request to teleport to a player.
+    usage: /tpr <player>
+  tpa:
+    description: Accepts a teleport request.
+    usage: /tpa
+  tpd:
+    description: Denys a pending request.
+    usage: /tpd
+  nick:
+    description: Changes display name.
+    usage: /nick <nick>
+  currentonlineplayers:
+    description: Displays the current players online.
+  sethome:
+    description: Sets current location as a home.
+  home:
+    description: Teleports to your set home.
