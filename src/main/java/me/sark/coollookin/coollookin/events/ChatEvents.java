@@ -15,7 +15,7 @@ public class ChatEvents implements Listener {
         String newFormat; /* new format of the text */
 
         newFormat = ChatColor.translateAlternateColorCodes
-                ('&', "&7[&e" + playerDisplayName + "&7] &8»&7 " + event.getMessage());
+                ('&', "&7[&b" + playerDisplayName + "&7] &8»&7 " + event.getMessage().toString());
 
         event.setFormat(newFormat);
     }
