@@ -8,6 +8,8 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Level;
@@ -19,6 +21,7 @@ public class Home implements CommandExecutor
     {
         Player player;
         String worldName;
+        FileConfiguration homeConfig = CoolLookin.homeData.getConfig();
 
         if (!(commandSender instanceof Player))
         {
@@ -34,9 +37,10 @@ public class Home implements CommandExecutor
             return false;
         }
 
+
         worldName = World.Environment.NORMAL.name();
 
-        if (!CoolLookin.homeData.getConfig().contains("homes."+ worldName + "." + player.getUniqueId().toString()))
+        if (!homeConfig.contains("homes."+ worldName + "." + player.getUniqueId().toString()))
         {
             MessengerHelper.sendMessageToPlayer
                     (player,"&7[&cHomes&7] &8»&7 You don't have any homes, you can set one by doing &e/sethome&7.");
@@ -45,13 +49,19 @@ public class Home implements CommandExecutor
 
         /* Getting the cords form the figgy */
         double hX,hY,hZ;
-        float hPitch, hYaw;
+        float hPitch = 0, hYaw = 0;
 
-        hX = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".X");
-        hY = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y");
-        hZ = CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z");
-        hPitch = (float)CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH");
-        hYaw = (float)CoolLookin.homeData.getConfig().getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW");
+        hX = homeConfig.getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".X");
+        hY = homeConfig.getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y");
+        hZ = homeConfig.getDouble("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z");
+
+        /* If Pitch and Yaw are stored use them! */
+        if (homeConfig.contains("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH") &&
+            homeConfig.contains("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW"))
+        {
+            hPitch = (float) homeConfig.getDouble("homes." + worldName + "." + player.getUniqueId().toString() + ".PITCH");
+            hYaw = (float) homeConfig.getDouble("homes." + worldName + "." + player.getUniqueId().toString() + ".YAW");
+        }
 
         /* Sending message and teleporting player */
         MessengerHelper.sendMessageToPlayer

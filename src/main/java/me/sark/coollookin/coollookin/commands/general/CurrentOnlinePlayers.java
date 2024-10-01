@@ -40,6 +40,6 @@ public class CurrentOnlinePlayers implements CommandExecutor
             return true;
         }
 
-        return false;
+        return true;
     }
 }

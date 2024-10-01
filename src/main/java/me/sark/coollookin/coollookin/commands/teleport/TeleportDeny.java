@@ -62,7 +62,8 @@ public class TeleportDeny implements CommandExecutor
         }
 
         TeleportManager.removeRequest(target);
+        MessengerHelper.sendMessageToPlayer(target,"&7[&aTeleport&7] &8»&7 Denied your pending request!");
 
-        return false;
+        return true;
     }
 }

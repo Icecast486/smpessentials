@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Level;
@@ -40,22 +41,21 @@ public class SetHome implements CommandExecutor
         }
 
         /* Added so I can implement multiple dimension homes */
+        FileConfiguration homeConfig = CoolLookin.homeData.getConfig();
         String worldName = World.Environment.NORMAL.name();
 
         /* seeing if player not in the config file, if they're not add him */
-        if (!CoolLookin.homeData.getConfig().contains("homes."+ worldName + "." + player.getUniqueId().toString()))
+        if (!homeConfig.contains("homes."+ worldName + "." + player.getUniqueId().toString()))
         {
-            /* Storing X, Y, Z */
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".X", player.getLocation().getX());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH", player.getLocation().getPitch());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW", player.getLocation().getYaw());
+            /* If player doesn't have XYZ cords, set it */
+            homeConfig.set("homes." + worldName + "." + player.getUniqueId().toString() + ".X", player.getLocation().getX());
+            homeConfig.set("homes." + worldName + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
+            homeConfig.set("homes." + worldName + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
+
+
+            /* If player doesn't have Pitch or Yaw stored, set it */
+            homeConfig.set("homes." + worldName + "." + player.getUniqueId().toString() + ".PITCH", player.getLocation().getPitch());
+            homeConfig.set("homes." + worldName + "." + player.getUniqueId().toString() + ".YAW", player.getLocation().getYaw());
 
             MessengerHelper.sendMessageToPlayer(player, "&7[&aHomes&7] &8»&7 Added your first home at current location!");
             CoolLookin.homeData.saveConfig();
@@ -63,27 +63,23 @@ public class SetHome implements CommandExecutor
             return true;
         }
 
+        /* Player is in the config past here */
         if (args.length != 1)
         {
-            MessengerHelper.sendMessageToPlayer
-                    (player, "&7[&aHomes&7] &8»&7 Looks like you already have a home, do &e/sethome override&7 to replace it.");
+            MessengerHelper.sendMessageToPlayer(player, "&7[&aHomes&7] &8»&7 Looks like you already have a home, do &e/sethome override&7 to replace it.");
             return true;
         }
 
-        /* Player is in the config past here */
+        /* TODO add the check whether the user has X,Y,Z or Pitch and Yaw Stored */
         if (args[0].equals("override"))
         {
             /* Storing X, Y, Z */
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".X", player.getLocation().getX());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH", player.getLocation().getPitch());
-            CoolLookin.homeData.getConfig().set
-                    ("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW", player.getLocation().getYaw());
+            homeConfig.set("homes."+ worldName + "." + player.getUniqueId().toString() + ".X", player.getLocation().getX());
+            homeConfig.set("homes."+ worldName + "." + player.getUniqueId().toString() + ".Y", player.getLocation().getY());
+            homeConfig.set("homes."+ worldName + "." + player.getUniqueId().toString() + ".Z", player.getLocation().getZ());
+
+            homeConfig.set("homes."+ worldName + "." + player.getUniqueId().toString() + ".PITCH", player.getLocation().getPitch());
+            homeConfig.set("homes."+ worldName + "." + player.getUniqueId().toString() + ".YAW", player.getLocation().getYaw());
 
             MessengerHelper.sendMessageToPlayer(player, "&7[&aHomes&7] &8»&7 Overwrote your old home.");
             CoolLookin.homeData.saveConfig();
